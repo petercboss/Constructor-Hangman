@@ -1,31 +1,29 @@
 const Letter = require('./Letter.js');
 
 let Word = function(word) {
-    this.word = word;
+    this.word = word.split('');
     this.currentWord = [];
     this.right = false;
-    this.createLetters = function(word) {
-        for (i = 0; i < this.word.length; i++) {
-            this.currentWord.push(new Letter(this.word[i]));
-        };
+    this.createLetters = word => {
+        this.word.forEach(i => {this.currentWord.push(new Letter(i))});
     };
-    this.letterGuess = function(letterGuess) {
-        for (i = 0; i < this.currentWord.length; i++) {
-            if (this.currentWord[i].letter === letterGuess) {
+    this.letterGuess = letterGuess => {
+        this.currentWord.forEach(i => {
+            if (i.letter === letterGuess) {
                 this.right = true;
-                this.currentWord[i].guessed = true;
+                i.guessed = true;
             };
-        };
-        if (this.currentWord.every(function(letter) {
+        });
+        if (this.currentWord.every(letter => {
             return letter.guessed
         })) return true;
     };
-    this.showBlanks = function(currentWord) {
-        let string = '';
-        for (i = 0; i < this.currentWord.length; i++) {
-            string += this.currentWord[i].letterGuessed();
-        };
-        console.log(string);
+    this.showBlanks = currentWord => {
+        let showWord = '';
+        this.currentWord.forEach(i => {
+           showWord += i.letterGuessed();
+        });
+       console.log(showWord);
     };
 };
 

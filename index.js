@@ -8,7 +8,7 @@ let currentWord = '';
 let guessesLeft = 10;
 
 let newWord = function() {
-    if (words === undefined) {
+    if (words.length === 0) {
       console.log(chalk.green(`YOU WIN!!!!`));
       return;
     };
@@ -32,13 +32,13 @@ let guessing = function() {
             return name !== '' && name.length === 1 && /[a-z]/i.test(name);;
           }   
       }
-    ]).then(function(letter) {
+    ]).then(letter => {
       currentWord.letterGuess(letter.guess.toLowerCase());
       if (currentWord.right === true) {
         console.log(chalk.green(`Correct!`));
         currentWord.right = false;
         if (currentWord.letterGuess()) {
-          console.log(chalk.green(`${currentWord.word}! You got it!!!`));
+          console.log(chalk.green(`${currentWord.word.join('')}! You got it!!!`));
           newWord();
         }
         else {
@@ -65,7 +65,7 @@ inquirer.prompt([
       type: 'confirm',
       default: true
   }
-]).then(function(game) {
+]).then(game => {
   if (game.start) {
       newWord();
   };
